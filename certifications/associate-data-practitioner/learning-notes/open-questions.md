@@ -493,7 +493,7 @@ The idea yes, the form usually not. **Still a bit fuzzy, revisit.**
 - **Group on the business key, not every column.** Real duplicates often differ in an unimportant column (a `loaded_at` timestamp) and slip past an all-columns check. Decide what should be unique (`order_id`, or visitor + visit + time + product + action) and group on that.
 - **Key check is stronger than all-columns.** If the key has no duplicates, all columns can't either (more columns only split piles). Not the reverse: same click with a different city = 0 duplicates by all columns, 1 by the key.
 - **Shortcuts:** any exact duplicates? compare `COUNT(*)` with `COUNT(DISTINCT TO_JSON_STRING(t))`. Remove: `SELECT DISTINCT *`. Keep latest per key: `QUALIFY ROW_NUMBER() OVER (PARTITION BY key ORDER BY loaded_at DESC) = 1`.
-- **Automate it:** pipelines run the check on every load, e.g. a Dataform `uniqueKey` assertion that fails the run.
+- **Automate it:** pipelines run the check on every load, e.g. a Dataform `uniqueKey` assertion. Make the next tables depend on it, because by default a failed assertion does not stop them.
 
 One line to keep: **group by the columns that should be unique; HAVING > 1 shows what isn't.**
 
@@ -851,6 +851,25 @@ selling point, no export, no copy, no second service.
 
 ---
 
+## A general AI assistant vs building an agent with ADK, isn't the outcome the same?
+
+For a one-off task, often identical. "Read these 40 claim PDFs, check them against the policy
+doc, draft the emails": a general assistant does that today, and a three-week ADK build does
+the same thing. If that is the comparison, the ADK version was a waste.
+
+**But they are not the same kind of thing.**
+
+- A general assistant is a tool **you drive**. You are in the loop, you see the work, you course-correct. A person using a tool.
+- ADK builds a **service that runs without you**. It sits behind an API, fires on a webhook when a claim lands at 3am, processes 4,000 of them, nobody watching. Software in a workflow.
+
+**The discriminating test: who triggers it, and is anyone watching?** "Me, and yes": use the
+assistant, build nothing. "An event, and no": you need the built thing.
+
+**Second gap: distribution.** You cannot hand a chat assistant to 200 claims processors as a
+step inside their existing system. You can hand them an endpoint.
+
+---
+
 ## When does a job actually deserve an agent? (the word→PDF question)
 
 Headless is fine, an agent behind an API endpoint with no chat UI is the *normal* production
@@ -969,6 +988,20 @@ space.
 And eyeballing a few outputs in Agent Studio is prototyping, not evaluation. Teams doing this
 seriously run a fixed set of test cases through both models and score them, same reason you
 do not ship a Power BI measure after checking one row.
+
+---
+
+## Who actually does this work, and what are they called?
+
+- **AI Engineer**: the real title now. A software engineer who builds LLM features. Not a data scientist, does not train models, works in Python or TypeScript. This is the person writing the ADK code.
+- **ML Engineer**: trains and serves actual models. Overlapping, older discipline, more maths.
+- **AI Solutions Architect**: pre-sales and design, sits with the client and decides what gets built. A solution architect, applied to AI.
+- **AI Consultant**: exists, but usually the architect title at a consultancy rather than a distinct skill set.
+
+**Where they sit:** product companies building AI into their own software, system integrators
+and managed service providers delivering it for clients, and internal platform teams at large
+enterprises. At a mid-sized services firm it is realistically a solution architect scoping it
+and one or two developers building it, not a dedicated AI department.
 
 ---
 

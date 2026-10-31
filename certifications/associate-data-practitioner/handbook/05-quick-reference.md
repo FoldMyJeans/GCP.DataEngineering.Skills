@@ -47,7 +47,7 @@ Read this the night before: find the phrase in the question, then jump to the se
 | Filter on `COUNT` or `SUM` / filter on `ROW_NUMBER` | `HAVING` / `QUALIFY` [see](02-analysis-and-presentation.md#s-sql) |
 | A total comes out too high after a join | Fan-out: reduce the many side to one row per key first [see](02-analysis-and-presentation.md#s-sql) |
 | Items are a list inside each order row | `UNNEST`, and `COUNT(*)` then counts items [see](02-analysis-and-presentation.md#s-nested) |
-| Make a query cheaper, someone suggests `LIMIT` | `LIMIT` still reads the whole table; filter the partition column and select fewer columns [see](02-analysis-and-presentation.md#s-cost-speed) |
+| Make a query cheaper, someone suggests `LIMIT` | `LIMIT` still reads the whole table unless it is clustered. Filter the partition column and select fewer columns [see](02-analysis-and-presentation.md#s-cost-speed) |
 | Queries always filter on a date / on customer or country | Partition by the date / cluster by those columns [see](02-analysis-and-presentation.md#s-cost-speed) |
 | Same aggregation, new rows all day, result must be current | Materialized view [see](02-analysis-and-presentation.md#s-cost-speed) |
 | Governed metrics defined once, many teams, LookML | Looker [see](02-analysis-and-presentation.md#s-looker) |

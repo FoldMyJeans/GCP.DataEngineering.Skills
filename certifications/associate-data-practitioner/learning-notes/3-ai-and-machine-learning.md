@@ -397,17 +397,20 @@ Google, on Google's data, once. You call the door.
 the grid works. Same for an API, know which method and what parameters, ignore the model
 training and deployment behind it.
 
-**The four-line shape** (Google AI for Python SDK; **SDK** = a library that wraps the raw HTTP
+**The shape** (the `google-genai` Python SDK. An **SDK** is a library that wraps the raw HTTP
 calls so they look like normal functions):
 
 ```python
-genai.configure(api_key="YOUR_API_KEY")            # who are you
-model = genai.GenerativeModel('gemini-2.5-flash')  # which model
-response = model.generate_content("your prompt")   # send
+client = genai.Client(api_key="YOUR_API_KEY")      # who are you
+response = client.models.generate_content(
+    model="gemini-flash-latest",                   # which model
+    contents="your prompt")                        # send
 print(response.text)                               # read
 ```
 
 Same authenticate → call → read pattern as the agent code, minus the tools and the loop.
+
+Correction: this first used the older `google-generativeai` package (`genai.configure`, `GenerativeModel`). That package is deprecated, and support ended on November 30, 2025, so `google-genai` is the one to install. Older examples still show the old calls.
 
 **The families:** generative AI APIs (Gemini, multimodal), ML APIs (train/monitor/tune), and
 the older single-purpose ones, Speech, Vision, Document, Natural Language.
@@ -527,6 +530,8 @@ Shell. Written steps assume SSH just works. It often does not.
 | `analyzeEntitySentiment` | things, each scored |
 | `analyzeSyntax` | individual words (tokens) |
 | `classifyText` | one topic tag for the whole document |
+
+These are the v1 methods, which is what the exercise called. The current v2 reference does not list `analyzeEntitySentiment` or `analyzeSyntax`, so check the version before building on those two.
 
 You are not telling the model *how* to chop the text. You are picking which question to ask,
 and each question has its own fixed answer shape. Everything else in the curl line, key,

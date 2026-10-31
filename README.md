@@ -1,78 +1,72 @@
-# Associate Data Practitioner Study Hub
+# GCP.DataEngineering.Skills
 
-My own notes and practice questions for the Google Cloud Associate Data Practitioner exam. Free and unofficial. 2026 edition.
+Data engineering on Google Cloud, in one place. Free study material for the data certifications, and agent skills for building real projects with what those certifications teach.
 
-I put this together while I was learning data work on Google Cloud. It is how I understand the topics, written in plain words, plus practice questions I made to test myself. If it helps you, you are welcome to all of it.
+Unofficial. Not affiliated with or endorsed by Google.
 
-## Start here
+## What are you here for?
 
-**[Open the ADP Study Hub](https://claude.ai/artifact/BKoxgMe73TZksDEshXkXGY)**
-
-It is one web page. It works on a phone or a computer, with no account and nothing to install.
-
-| In the hub | What you get |
+| You want to | Go to |
 |---|---|
-| Handbook | The four domains of the public exam guide in plain words, with flowcharts, decision trees and process maps |
-| Practice 1 to 4 | Four sets of 60 practice questions, each with a 2 hour clock |
-| Your result | A score at the end, split by domain |
-| Review | A short reason under every option, so you see why the right one is right and why the others are wrong |
-| Quick reference | "If the question says X, think Y", tool choosers and look-alike names |
+| Pass the Associate Data Practitioner exam | [certifications/associate-data-practitioner](certifications/associate-data-practitioner/README.md): the handbook, practice sets, hands-on notes and a two week plan |
+| Pass the Professional Data Engineer exam | [certifications/professional-data-engineer](certifications/professional-data-engineer/README.md): not written yet |
+| Build something on Google Cloud with an AI agent | [The skills](#the-skills) below |
 
-## A two week plan
+You only need the part you came for. Nothing in one depends on the other.
 
-This is the plan I would follow. Change it to fit your own pace.
+## The skills
 
-| Day | What to do |
-|---|---|
-| 1 | Read [Start here](handbook/00-start-here.md). Try Practice set 1 cold, just to see where you stand |
-| 2 to 3 | Read [Domain 1](handbook/01-data-preparation-and-ingestion.md). Load a file into BigQuery yourself and query it. My [hands-on notes](hands-on/README.md) show what I built |
-| 4 to 5 | Read [Domain 2](handbook/02-analysis-and-presentation.md). Write SQL in BigQuery every day |
-| 6 | Read [Domain 3](handbook/03-pipeline-orchestration.md) and [Domain 4](handbook/04-data-management.md) |
-| 7 | Do Practice set 2 with the clock on. Review every question you missed or guessed |
-| 8 | Go back to the handbook sections your misses point to |
-| 9 | Do Practice set 3. It is the hardest set, so a lower score is normal |
-| 10 | Review set 3. Read [Traps I fell for](notes/traps-i-fell-for.md) |
-| 11 | Do Practice set 4 |
-| 12 | Review set 4. Repeat the set where you scored lowest |
-| 13 | Read the [quick reference sheets](handbook/05-quick-reference.md) and the 2026 product renames |
-| 14 | Rest |
+Exam notes teach you to pick the right answer. A skill tells an agent how to build the thing, and where it goes wrong. These come from working through Google Cloud hands-on, so they carry the exact errors and traps I hit. Where a skill goes beyond what I ran myself, it says so.
 
-Three things made the difference for me:
+| Skill | What it does | Example trigger |
+| --- | --- | --- |
+| `gcp-build-playbook` | Plan a whole project end to end and route to the right skill: phase order, decisions that are expensive to reverse, choosing storage, and working with a console that no longer matches written steps. | "where do I start", "which database should I use", "plan this build" |
+| `gcp-ingestion-and-migration` | Choose how data gets into Google Cloud, then set it up: file transfers, `bq load`, Datastream replication, and querying files without loading them. | "load this CSV into BigQuery", "replicate Postgres to BigQuery", "move this data from S3" |
+| `gcp-bigquery` | Write SQL that is actually right, design tables so queries stay cheap, and control and recover the data. | "my numbers don't match", "why did this query cost so much", "hide this column" |
+| `gcp-pipelines-and-orchestration` | Choose and build transforms and what runs them: Dataform, Dataflow, Pub/Sub, serverless Spark, Airflow, Workflows and Eventarc. | "build a pipeline", "stream this into BigQuery", "run when a file lands" |
+| `gcp-ml-and-agents` | Choose a model, judge it, serve it, and build agents: BigQuery ML, AutoML, Gemini, and the Agent Development Kit. | "train a model", "my model has low recall", "build an agent" |
 
-1. **Review every miss.** The learning is in the reasons, not in the score. Read why each wrong option fails.
-2. **Count a guess as a miss.** If you were not sure, read the reason anyway.
-3. **Get your hands on the tools.** Reading about BigQuery is not the same as running a query in it.
+## Use the skills
 
-## What is in this repo
+The skills follow the Agent Skills standard: a `SKILL.md` with `name` and `description` frontmatter, plus a `references/` folder. It is an open format, and each skill folder is self contained.
 
-| Folder | What it holds |
-|---|---|
-| [handbook](handbook/README.md) | The handbook as markdown, one file per chapter, with the diagrams. Easy to read here on GitHub |
-| [notes](notes) | [Questions I asked while studying](notes/plain-language-qa.md), with plain answers, and [Traps I fell for](notes/traps-i-fell-for.md) |
-| [hands-on](hands-on/README.md) | What I learned working hands-on with Google Cloud: what I built, what it taught me and what tripped me up |
-| [learning-notes](learning-notes/README.md) | My full working notes, long and unpolished, with every question I asked and my self-check questions |
-| [maps](maps) | Two interactive maps I drew for myself: how data moves on Google Cloud, and the families of machine learning models. Download a file and open it in a browser |
-| [offline](offline) | The whole hub as a single HTML file. Download it and open it in any browser |
+### Claude Code
 
-## Official resources
+```
+claude plugin marketplace add FoldMyJeans/GCP.DataEngineering.Skills
+claude plugin install gcp-data-engineering-skills@gcp-data-engineering-skills
+```
 
-Google's own pages are the source of truth. Use them first.
+Run those from a project folder, then restart your session so the skills load. Update later with `claude plugin update gcp-data-engineering-skills`.
 
-- [Official certification page](https://cloud.google.com/learn/certification/data-practitioner): format, price and how to register
-- [Official exam guide (PDF)](https://services.google.com/fh/files/misc/v1.0_associate_data_practitioner_exam_guide_english.pdf): the public list of topics
-- [Google Cloud documentation](https://docs.cloud.google.com/docs): every product named in these notes
+### Codex, Cursor, and other agents that read ~/.agents/skills
+
+PowerShell (Windows):
+
+```
+git clone https://github.com/FoldMyJeans/GCP.DataEngineering.Skills
+Copy-Item -Recurse -Force GCP.DataEngineering.Skills/skills/* ~/.agents/skills/
+```
+
+macOS or Linux:
+
+```
+git clone https://github.com/FoldMyJeans/GCP.DataEngineering.Skills
+mkdir -p ~/.agents/skills && cp -R GCP.DataEngineering.Skills/skills/* ~/.agents/skills/
+```
+
+### Any other AI tool
+
+A skill is a folder of markdown. Give the tool the repo link and tell it which skill to read, for example `skills/gcp-ingestion-and-migration/SKILL.md`. If it cannot browse, paste the `SKILL.md` in, then the file under `references/` it points you to.
 
 ## Good to know
 
-- This is unofficial, personal study material. It is not affiliated with or endorsed by Google.
-- Everything here is original: my own notes and my own practice questions, put together from the public exam guide, the public Google Cloud documentation and my own hands-on practice.
-- Nothing here comes from the actual exam. The questions were finished before I took it and have not been changed from memory of it.
-- These are my notes, so they can be wrong in places. Where they disagree with the Google Cloud docs, trust the docs.
-- Google renamed several products in 2024 to 2026. The hub uses the new name and puts the old one in brackets, for example Managed Service for Apache Spark (used to be Dataproc).
-- Found a mistake? Please open an issue and I will fix it.
+- Everything here is original: my own notes, questions and skills, put together from public Google Cloud documentation, public exam guides and my own hands-on practice. Nothing comes from an actual exam.
+- Google renamed several products in 2024 to 2026. This repo uses the new name and puts the old one in brackets, for example Managed Service for Apache Spark (used to be Dataproc).
+- These can be wrong in places. Where they disagree with the Google Cloud docs, trust the docs. Found a mistake? Please open an issue.
 
-## Good luck
+## Contributing
 
-Read, practice, and review your misses.
+See [AGENTS.md](AGENTS.md) for the writing rules and how the skills are structured.
 
 Created by [Reza Seifollahi](https://www.linkedin.com/in/mrezasf/), 2026.

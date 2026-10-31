@@ -984,7 +984,7 @@ Write the mapping once in `includes/`, call it everywhere. Improves readability 
 
 #### Assertions and operations
 
-- **Assertions** = **data quality tests**, written in **SQL or JavaScript**. Ensure consistency and accuracy; flexible enough for complex checks. e.g. "customer_id is never null" → the pipeline fails loudly instead of shipping bad rows to production.
+- **Assertions** = **data quality tests**, written in **SQL or JavaScript**. Ensure consistency and accuracy; flexible enough for complex checks. e.g. "customer_id is never null" → the assertion fails and Dataform alerts you. Correction after checking the docs: by default that does **not** stop a table that depends on the checked table. To make it wait, add the assertions as dependencies, with `includeDependentAssertions: true` on one dependency or `dependOnDependencyAssertions: true` on the whole file.
 - **Operations** = **custom SQL statements** run **before, after, or during** pipeline execution.
 
 Together these are the answer to the gap the previous section ended on, a scheduled query can't test its output or trigger the next step.
@@ -1016,7 +1016,7 @@ customer_rowConsistency (assertions - data quality checks)
    └── customer_prod_view (view)
 ```
 
-Note the assertion sits **in the middle of the graph**, gating everything downstream, not bolted on at the end.
+Note the assertion sits **in the middle of the graph**, not bolted on at the end. It only gates what comes after it if those actions depend on it, either directly or through the settings above. A failed assertion on a table does not block that table's dependents by default.
 
 #### Scheduling and execution, two paths
 
@@ -1094,6 +1094,8 @@ done
 | **BigQuery Data Viewer** | Read the source data |
 
 **Skip the "Grant all" button** on the repository-created screen, it only adds `jobUser`, one of the three.
+
+**This covers a run started by hand.** Scheduled runs are different: the docs say a workflow configuration cannot run with the default Dataform service agent. It needs a custom service account or user credentials, and the service agent needs Service Account User and Service Account Token Creator on that custom account. I did not run this.
 
 UI path for the same thing: ☰ → **IAM & Admin → IAM** → **VIEW BY PRINCIPALS** → **+ GRANT ACCESS** → paste the SA → add the three roles → Save. Same page used for Storage Object Viewer in the Lakehouse exercise, one place for every permission in a project, whatever the service.
 

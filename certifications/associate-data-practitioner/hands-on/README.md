@@ -134,7 +134,7 @@ A connection resource, a Lakehouse (used to be BigLake) table over a CSV file in
 - The create table form defaults to a native table. You have to switch it to External table yourself.
 - The Add policy tag button only appears in Edit schema mode. The read-only Schema tab lets you tick fields but shows no tag button.
 - Naming: newer material says Lakehouse and older material says BigLake. It is the same product, and both names still show up in the console.
-- The two steps that carry the real lesson are the query and the policy tags. Do not skip them.
+- The two steps that carry the real lesson are the query and the policy tags. Neither one is scored, so nothing stops you skipping them. Do not skip them.
 - To confirm the upgrade worked, open the table details. A connection ID appears under the external data configuration and the table is marked as a Lakehouse table.
 
 ## A two-step SQL pipeline in Dataform
@@ -160,7 +160,7 @@ The smallest possible pipeline in Dataform: one view with a few hand-typed rows,
   ```
 
   With that file open, the metadata pane lists the dependency, even though I never typed it anywhere else. In the execution log the table started a few seconds after the view it depends on.
-- Dataform's service account needs three BigQuery roles: Job User to run queries, Data Editor to create and write tables, and Data Viewer to read source data.
+- Dataform's service account needs three BigQuery roles: Job User to run queries, Data Editor to create and write tables, and Data Viewer to read source data. That covers a run started by hand, which is what I did. The docs say scheduled runs cannot use the default service agent and need a custom service account.
 - Output lands in a dataset named `dataform` unless you change the repository settings.
 - The pattern to recognize: create a service account, give it roles, and it does the work. Datastream, Lakehouse connections and Dataform all work this way.
 
@@ -235,7 +235,7 @@ A partitioned BigQuery table, a Dataflow streaming job started from a Google tem
 
 ## BigQuery and SQL exercises
 
-The next six exercises are all about querying BigQuery data and reporting on it. General tips for that kind of work:
+The next six exercises are all about querying BigQuery data and reporting on it. They are the practice part of the Derive Insights from BigQuery Data skill badge. Only the required challenge lab earns the badge. It gives you a task with no steps, and an automatic checker grades it. General tips for that kind of work:
 
 - If you can explain every query in them, you have the core skills: filtering, grouping, counting distinct values, and reading an error message.
 - Before writing a query, open the Schema, Details and Preview tabs of the table. Most wrong answers start with a wrong guess about a column.
@@ -282,7 +282,7 @@ Your own dataset and table. You load a text file from a public bucket, type the 
 - A schema written as text is a list of `column:type` pairs, matched to the file by position. The wrong order breaks the load. Types matter for sorting: as text, "9000" sorts above "19000".
 - If a file has a header row, set "header rows to skip" to 1 in the advanced options. The MySQL import in the previous exercise had no such setting.
 - Domain 2: cost is bytes scanned, and the console shows the estimate before you run the query. On-demand pricing is roughly 6.25 US dollars per TB, and the first 1 TB of queries each month is free. The practice project runs in the free sandbox mode.
-- `LIMIT` does not lower cost. A "top 10" still reads the whole column. Selecting fewer columns lowers cost. The Preview tab is free.
+- `LIMIT` does not lower cost on a non-clustered table. A "top 10" still reads the whole column. On a clustered table the docs say it can reduce bytes read, but do not plan around that. Selecting fewer columns lowers cost. The Preview tab is free.
 - A table name with no project in front means your own project. Tables in other projects need the full `project.dataset.table` name.
 - Data quality. In my "heaviest" result, the top rows all had the exact same weight, which looks like a cap or a placeholder value. Question outliers before you trust a top or bottom answer.
 
@@ -508,6 +508,8 @@ An API key, and then a series of calls to the Cloud Natural Language API from a 
   | `analyzeSyntax` | Single words (tokens) and their grammar |
   | `classifyText` | One topic for the whole document |
 
+  I called the v1 API. The current v2 reference does not list `analyzeEntitySentiment` or `analyzeSyntax`, so check the version before building on those two.
+
 - Salience is a number from 0 to 1 for how central an entity is to the text. It separates what a text mentions from what it is about.
 - Sentiment has two numbers. Score runs from negative to positive. Magnitude is the total amount of emotion in either direction. A review that is half glowing and half furious has a score near zero, the same as a flat one. Magnitude tells them apart.
 - Entity sentiment is the one that earns its keep. "I liked the food but the service was terrible" averages out to neutral as a whole. Scored per entity, it says the food is fine and the service is the problem.
@@ -554,6 +556,8 @@ A tabular dataset in Agent Platform (used to be Vertex AI) and an AutoML classif
 
 - Assume the written steps are a little stale. When a button is missing, look for the modern equivalent. A Cloud Shell command often does the same job.
 - When time is limited, do the main steps first and explore afterward. I lost one exercise to the clock by doing it the other way around.
+- A progress check walks the queries in order and names the next one it has not seen. It wants a query that runs without error too. Run every runnable query in the written steps, in order.
+- Checkbox questions inside an exercise can have two right answers. Read every option.
 - Start slow resources first. A database instance can take 5 to 10 minutes to build.
 - Close every incognito window between exercises. A leftover account from the last one breaks the next sign-in. Check the avatar before you connect any data.
 - When a Create button seems stuck, check the list before you submit again. The resource may already exist.
