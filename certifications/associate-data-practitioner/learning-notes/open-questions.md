@@ -493,7 +493,7 @@ The idea yes, the form usually not. **Still a bit fuzzy, revisit.**
 - **Group on the business key, not every column.** Real duplicates often differ in an unimportant column (a `loaded_at` timestamp) and slip past an all-columns check. Decide what should be unique (`order_id`, or visitor + visit + time + product + action) and group on that.
 - **Key check is stronger than all-columns.** If the key has no duplicates, all columns can't either (more columns only split piles). Not the reverse: same click with a different city = 0 duplicates by all columns, 1 by the key.
 - **Shortcuts:** any exact duplicates? compare `COUNT(*)` with `COUNT(DISTINCT TO_JSON_STRING(t))`. Remove: `SELECT DISTINCT *`. Keep latest per key: `QUALIFY ROW_NUMBER() OVER (PARTITION BY key ORDER BY loaded_at DESC) = 1`.
-- **Automate it:** pipelines run the check on every load, e.g. a Dataform `uniqueKey` assertion that fails the run.
+- **Automate it:** pipelines run the check on every load, e.g. a Dataform `uniqueKey` assertion. Make the next tables depend on it, because by default a failed assertion does not stop them.
 
 One line to keep: **group by the columns that should be unique; HAVING > 1 shows what isn't.**
 

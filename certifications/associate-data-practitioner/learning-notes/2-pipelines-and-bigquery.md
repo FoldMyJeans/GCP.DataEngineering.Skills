@@ -515,7 +515,7 @@ file in Google's bucket (baby-names/yob2014.txt) → create dataset babynames �
 ### Concepts clarified
 
 - **Cost = bytes scanned, shown before you run.** On-demand is roughly $6.25 per TB; first 1 TB of queries per month free. 3.49 GB ≈ 2 cents. The practice project is a **Sandbox** (free mode, no billing).
-- **LIMIT does not lower cost.** 10 heaviest babies still reads every row's weight. Selecting fewer columns lowers cost; **Preview tab is free**.
+- **LIMIT does not lower cost** on a non-clustered table. 10 heaviest babies still reads every row's weight. (The docs say it can reduce bytes on a clustered table, because the scan stops once enough blocks are read. Do not plan around that.) Selecting fewer columns lowers cost; **Preview tab is free**.
 - **Two baby things, unrelated:** natality = Google's project, dataset `samples`. `babynames` = new empty dataset in my project, filled from a bucket file.
 - **Schema = `column:type`, matched to the file by position.** Line `Noah,M,19000` → name, gender, count. Wrong order fails the load. Type matters for sorting: as text "9000" sorts above "19000".
 - **Auto detect** lets BigQuery guess the types. Fine for exploring; defining it yourself is safer.

@@ -160,7 +160,7 @@ The smallest possible pipeline in Dataform: one view with a few hand-typed rows,
   ```
 
   With that file open, the metadata pane lists the dependency, even though I never typed it anywhere else. In the execution log the table started a few seconds after the view it depends on.
-- Dataform's service account needs three BigQuery roles: Job User to run queries, Data Editor to create and write tables, and Data Viewer to read source data.
+- Dataform's service account needs three BigQuery roles: Job User to run queries, Data Editor to create and write tables, and Data Viewer to read source data. That covers a run started by hand, which is what I did. The docs say scheduled runs cannot use the default service agent and need a custom service account.
 - Output lands in a dataset named `dataform` unless you change the repository settings.
 - The pattern to recognize: create a service account, give it roles, and it does the work. Datastream, Lakehouse connections and Dataform all work this way.
 
@@ -282,7 +282,7 @@ Your own dataset and table. You load a text file from a public bucket, type the 
 - A schema written as text is a list of `column:type` pairs, matched to the file by position. The wrong order breaks the load. Types matter for sorting: as text, "9000" sorts above "19000".
 - If a file has a header row, set "header rows to skip" to 1 in the advanced options. The MySQL import in the previous exercise had no such setting.
 - Domain 2: cost is bytes scanned, and the console shows the estimate before you run the query. On-demand pricing is roughly 6.25 US dollars per TB, and the first 1 TB of queries each month is free. The practice project runs in the free sandbox mode.
-- `LIMIT` does not lower cost. A "top 10" still reads the whole column. Selecting fewer columns lowers cost. The Preview tab is free.
+- `LIMIT` does not lower cost on a non-clustered table. A "top 10" still reads the whole column. On a clustered table the docs say it can reduce bytes read, but do not plan around that. Selecting fewer columns lowers cost. The Preview tab is free.
 - A table name with no project in front means your own project. Tables in other projects need the full `project.dataset.table` name.
 - Data quality. In my "heaviest" result, the top rows all had the exact same weight, which looks like a cap or a placeholder value. Question outliers before you trust a top or bottom answer.
 
@@ -507,6 +507,8 @@ An API key, and then a series of calls to the Cloud Natural Language API from a 
   | `analyzeEntitySentiment` | Things, each with its own score |
   | `analyzeSyntax` | Single words (tokens) and their grammar |
   | `classifyText` | One topic for the whole document |
+
+  I called the v1 API. The current v2 reference does not list `analyzeEntitySentiment` or `analyzeSyntax`, so check the version before building on those two.
 
 - Salience is a number from 0 to 1 for how central an entity is to the text. It separates what a text mentions from what it is about.
 - Sentiment has two numbers. Score runs from negative to positive. Magnitude is the total amount of emotion in either direction. A review that is half glowing and half furious has a score near zero, the same as a flat one. Magnitude tells them apart.

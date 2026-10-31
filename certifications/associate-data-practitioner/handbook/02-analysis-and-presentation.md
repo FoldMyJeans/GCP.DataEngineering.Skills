@@ -198,7 +198,7 @@ Three ways to reuse a result differ in freshness and speed. A standard view is a
 | Read less data | Pick only the columns you need |
 
 > [!WARNING]
-> **Common trap.** Adding `LIMIT 10` feels cheaper, but the full table is still read and billed. A filter on the partitioning column is what reduces the bytes.
+> **Common trap.** Adding `LIMIT 10` feels cheaper, but on a non-clustered table the full table is still read and billed. A filter on the partitioning column is what reduces the bytes.
 
 **Read more in the Google Cloud docs**
 
