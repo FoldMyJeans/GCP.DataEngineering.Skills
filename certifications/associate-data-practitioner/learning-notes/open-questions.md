@@ -851,6 +851,25 @@ selling point, no export, no copy, no second service.
 
 ---
 
+## A general AI assistant vs building an agent with ADK, isn't the outcome the same?
+
+For a one-off task, often identical. "Read these 40 claim PDFs, check them against the policy
+doc, draft the emails": a general assistant does that today, and a three-week ADK build does
+the same thing. If that is the comparison, the ADK version was a waste.
+
+**But they are not the same kind of thing.**
+
+- A general assistant is a tool **you drive**. You are in the loop, you see the work, you course-correct. A person using a tool.
+- ADK builds a **service that runs without you**. It sits behind an API, fires on a webhook when a claim lands at 3am, processes 4,000 of them, nobody watching. Software in a workflow.
+
+**The discriminating test: who triggers it, and is anyone watching?** "Me, and yes": use the
+assistant, build nothing. "An event, and no": you need the built thing.
+
+**Second gap: distribution.** You cannot hand a chat assistant to 200 claims processors as a
+step inside their existing system. You can hand them an endpoint.
+
+---
+
 ## When does a job actually deserve an agent? (the word→PDF question)
 
 Headless is fine, an agent behind an API endpoint with no chat UI is the *normal* production
@@ -969,6 +988,20 @@ space.
 And eyeballing a few outputs in Agent Studio is prototyping, not evaluation. Teams doing this
 seriously run a fixed set of test cases through both models and score them, same reason you
 do not ship a Power BI measure after checking one row.
+
+---
+
+## Who actually does this work, and what are they called?
+
+- **AI Engineer**: the real title now. A software engineer who builds LLM features. Not a data scientist, does not train models, works in Python or TypeScript. This is the person writing the ADK code.
+- **ML Engineer**: trains and serves actual models. Overlapping, older discipline, more maths.
+- **AI Solutions Architect**: pre-sales and design, sits with the client and decides what gets built. A solution architect, applied to AI.
+- **AI Consultant**: exists, but usually the architect title at a consultancy rather than a distinct skill set.
+
+**Where they sit:** product companies building AI into their own software, system integrators
+and managed service providers delivering it for clients, and internal platform teams at large
+enterprises. At a mid-sized services firm it is realistically a solution architect scoping it
+and one or two developers building it, not a dedicated AI department.
 
 ---
 

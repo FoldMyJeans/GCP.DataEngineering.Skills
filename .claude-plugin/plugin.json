@@ -1,0 +1,11 @@
+{
+  "name": "gcp-data-engineering-skills",
+  "version": "0.1.0",
+  "description": "Google Cloud data engineering build skills, drawn from hands-on work: choosing and setting up ingestion, with more planned.",
+  "author": {
+    "name": "FoldMyJeans",
+    "url": "https://github.com/FoldMyJeans"
+  },
+  "repository": "https://github.com/FoldMyJeans/GCP.DataEngineering.Skills",
+  "skills": "./skills/"
+}

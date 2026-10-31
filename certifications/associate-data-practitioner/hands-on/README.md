@@ -134,7 +134,7 @@ A connection resource, a Lakehouse (used to be BigLake) table over a CSV file in
 - The create table form defaults to a native table. You have to switch it to External table yourself.
 - The Add policy tag button only appears in Edit schema mode. The read-only Schema tab lets you tick fields but shows no tag button.
 - Naming: newer material says Lakehouse and older material says BigLake. It is the same product, and both names still show up in the console.
-- The two steps that carry the real lesson are the query and the policy tags. Do not skip them.
+- The two steps that carry the real lesson are the query and the policy tags. Neither one is scored, so nothing stops you skipping them. Do not skip them.
 - To confirm the upgrade worked, open the table details. A connection ID appears under the external data configuration and the table is marked as a Lakehouse table.
 
 ## A two-step SQL pipeline in Dataform
@@ -235,7 +235,7 @@ A partitioned BigQuery table, a Dataflow streaming job started from a Google tem
 
 ## BigQuery and SQL exercises
 
-The next six exercises are all about querying BigQuery data and reporting on it. General tips for that kind of work:
+The next six exercises are all about querying BigQuery data and reporting on it. They are the practice part of the Derive Insights from BigQuery Data skill badge. Only the required challenge lab earns the badge. It gives you a task with no steps, and an automatic checker grades it. General tips for that kind of work:
 
 - If you can explain every query in them, you have the core skills: filtering, grouping, counting distinct values, and reading an error message.
 - Before writing a query, open the Schema, Details and Preview tabs of the table. Most wrong answers start with a wrong guess about a column.
@@ -554,6 +554,8 @@ A tabular dataset in Agent Platform (used to be Vertex AI) and an AutoML classif
 
 - Assume the written steps are a little stale. When a button is missing, look for the modern equivalent. A Cloud Shell command often does the same job.
 - When time is limited, do the main steps first and explore afterward. I lost one exercise to the clock by doing it the other way around.
+- A progress check walks the queries in order and names the next one it has not seen. It wants a query that runs without error too. Run every runnable query in the written steps, in order.
+- Checkbox questions inside an exercise can have two right answers. Read every option.
 - Start slow resources first. A database instance can take 5 to 10 minutes to build.
 - Close every incognito window between exercises. A leftover account from the last one breaks the next sign-in. Check the avatar before you connect any data.
 - When a Create button seems stuck, check the list before you submit again. The resource may already exist.
