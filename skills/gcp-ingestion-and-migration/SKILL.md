@@ -16,7 +16,7 @@ description: >-
 
 # GCP ingestion and migration
 
-This skill covers getting data into Google Cloud. It stops once the data has landed. Transforming it in BigQuery, scheduling it and orchestrating it are separate work.
+This skill covers getting data into Google Cloud. It stops once the data has landed. Querying it is `gcp-bigquery`. Transforming, scheduling and orchestrating it are `gcp-pipelines-and-orchestration`.
 
 It starts from hands-on practice projects. Advice that was not run hands-on is labelled "Not run here:", so check it against the current docs before relying on it.
 

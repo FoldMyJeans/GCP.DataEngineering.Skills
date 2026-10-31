@@ -20,9 +20,11 @@ Exam notes teach you to pick the right answer. A skill tells an agent how to bui
 
 | Skill | What it does | Example trigger |
 | --- | --- | --- |
+| `gcp-build-playbook` | Plan a whole project end to end and route to the right skill: phase order, decisions that are expensive to reverse, choosing storage, and working with a console that no longer matches written steps. | "where do I start", "which database should I use", "plan this build" |
 | `gcp-ingestion-and-migration` | Choose how data gets into Google Cloud, then set it up: file transfers, `bq load`, Datastream replication, and querying files without loading them. | "load this CSV into BigQuery", "replicate Postgres to BigQuery", "move this data from S3" |
-
-More are planned, covering BigQuery, pipelines and orchestration, ML and agents, and an overall build playbook.
+| `gcp-bigquery` | Write SQL that is actually right, design tables so queries stay cheap, and control and recover the data. | "my numbers don't match", "why did this query cost so much", "hide this column" |
+| `gcp-pipelines-and-orchestration` | Choose and build transforms and what runs them: Dataform, Dataflow, Pub/Sub, serverless Spark, Airflow, Workflows and Eventarc. | "build a pipeline", "stream this into BigQuery", "run when a file lands" |
+| `gcp-ml-and-agents` | Choose a model, judge it, serve it, and build agents: BigQuery ML, AutoML, Gemini, and the Agent Development Kit. | "train a model", "my model has low recall", "build an agent" |
 
 ## Use the skills
 
